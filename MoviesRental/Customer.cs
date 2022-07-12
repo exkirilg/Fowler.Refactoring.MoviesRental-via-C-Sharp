@@ -24,24 +24,7 @@ public class Customer
 
         foreach (var rental in Rentals)
         {
-            double thisAmount = 0;
-
-            switch (rental.Movie.PriceCode)
-            {
-                case Movie.Regular:
-                    thisAmount += 2;
-                    if (rental.DaysRented > 2)
-                        thisAmount += (rental.DaysRented - 2) * 1.5;
-                    break;
-                case Movie.NewRelease:
-                    thisAmount += rental.DaysRented * 3;
-                    break;
-                case Movie.Childrens:
-                    thisAmount += 1.5;
-                    if (rental.DaysRented > 3)
-                        thisAmount += (rental.DaysRented - 3) * 1.5;
-                    break;
-            }
+            double thisAmount = amountFor(rental);
 
             frequentRentalPoints++;
 
@@ -54,6 +37,30 @@ public class Customer
 
         result += $"The amount of debt is {totalAmount}\n";
         result += $"You earned {frequentRentalPoints} for activity";
+
+        return result;
+    }
+
+    private double amountFor(Rental aRental)
+    {
+        double result = 0;
+
+        switch (aRental.Movie.PriceCode)
+        {
+            case Movie.Regular:
+                result += 2;
+                if (aRental.DaysRented > 2)
+                    result += (aRental.DaysRented - 2) * 1.5;
+                break;
+            case Movie.NewRelease:
+                result += aRental.DaysRented * 3;
+                break;
+            case Movie.Childrens:
+                result += 1.5;
+                if (aRental.DaysRented > 3)
+                    result += (aRental.DaysRented - 3) * 1.5;
+                break;
+        }
 
         return result;
     }
