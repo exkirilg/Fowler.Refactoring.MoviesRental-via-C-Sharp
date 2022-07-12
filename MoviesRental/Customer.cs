@@ -24,10 +24,7 @@ public class Customer
 
         foreach (var aRental in Rentals)
         {
-            frequentRentalPoints++;
-
-            if (aRental.Movie.PriceCode == Movie.NewRelease && aRental.DaysRented > 1)
-                frequentRentalPoints++;
+            frequentRentalPoints += aRental.GetFrequentRenterPoints();
 
             result += $"\t{aRental.Movie.Title}\t{aRental.GetCharge()}\n";
             totalAmount += aRental.GetCharge();

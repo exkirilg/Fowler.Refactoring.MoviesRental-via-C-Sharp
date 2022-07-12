@@ -34,4 +34,11 @@ public class Rental
 
         return result;
     }
+    public int GetFrequentRenterPoints()
+    {
+        if (Movie.PriceCode == Movie.NewRelease && DaysRented > 1)
+            return 2;
+
+        return 1;
+    }
 }
