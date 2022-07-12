@@ -12,7 +12,7 @@ public class NewReleasesPrice : Price
         return daysRented * 3;
     }
 
-    public new int GetFrequentRenterPoints(int daysRented)
+    public override int GetFrequentRenterPoints(int daysRented)
     {
         return daysRented > 1 ? 2 : 1;
     }
