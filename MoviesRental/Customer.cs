@@ -27,6 +27,20 @@ public class Customer
 
         return result;
     }
+    public string HTMLStatement()
+    {
+        string result = $"<h1>Rental for <em>{Name}</em></h1>";
+
+        result += "<ul>";
+        foreach (var aRental in Rentals)
+            result += $"<li>{aRental.Movie.Title} - {aRental.GetCharge()}</li>";
+        result += "</ul>";
+
+        result += $"<p>The amount of debt is <em>{GetTotalCharge()}</em></p>";
+        result += $"<p>You earned <em>{GetTotalFrequentRenterPoints()}</em> for activity</p>";
+
+        return result;
+    }
 
     private double GetTotalCharge()
     {
