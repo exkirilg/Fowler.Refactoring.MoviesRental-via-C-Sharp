@@ -24,15 +24,13 @@ public class Customer
 
         foreach (var aRental in Rentals)
         {
-            double thisAmount = aRental.GetCharge();
-
             frequentRentalPoints++;
 
             if (aRental.Movie.PriceCode == Movie.NewRelease && aRental.DaysRented > 1)
                 frequentRentalPoints++;
 
-            result += $"\t{aRental.Movie.Title}\t{thisAmount}\n";
-            totalAmount += thisAmount;
+            result += $"\t{aRental.Movie.Title}\t{aRental.GetCharge()}\n";
+            totalAmount += aRental.GetCharge();
         }
 
         result += $"The amount of debt is {totalAmount}\n";
