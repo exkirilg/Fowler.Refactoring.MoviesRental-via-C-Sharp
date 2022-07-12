@@ -10,4 +10,13 @@ public class Rental
         Movie = movie;
         DaysRented = daysRented;
     }
+
+    public double GetCharge()
+    {
+        return Movie.GetCharge(DaysRented);
+    }
+    public int GetFrequentRenterPoints()
+    {
+        return Movie.GetFrequentRenterPoints(DaysRented);
+    }
 }

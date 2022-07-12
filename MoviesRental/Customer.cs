@@ -17,44 +17,37 @@ public class Customer
 
     public string Statement()
     {
-        double totalAmount = 0;
-        int frequentRentalPoints = 0;
-
         string result = $"Rental for {Name}\n";
 
-        foreach (var rental in Rentals)
-        {
-            double thisAmount = 0;
+        foreach (var aRental in Rentals)
+            result += $"\t{aRental.Movie.Title}\t{aRental.GetCharge()}\n";
 
-            switch (rental.Movie.PriceCode)
-            {
-                case Movie.Regular:
-                    thisAmount += 2;
-                    if (rental.DaysRented > 2)
-                        thisAmount += (rental.DaysRented - 2) * 1.5;
-                    break;
-                case Movie.NewRelease:
-                    thisAmount += rental.DaysRented * 3;
-                    break;
-                case Movie.Childrens:
-                    thisAmount += 1.5;
-                    if (rental.DaysRented > 3)
-                        thisAmount += (rental.DaysRented - 3) * 1.5;
-                    break;
-            }
-
-            frequentRentalPoints++;
-
-            if (rental.Movie.PriceCode == Movie.NewRelease && rental.DaysRented > 1)
-                frequentRentalPoints++;
-
-            result += $"\t{rental.Movie.Title}\t{thisAmount}\n";
-            totalAmount += thisAmount;
-        }
-
-        result += $"The amount of debt is {totalAmount}\n";
-        result += $"You earned {frequentRentalPoints} for activity";
+        result += $"The amount of debt is {GetTotalCharge()}\n";
+        result += $"You earned {GetTotalFrequentRenterPoints()} for activity";
 
         return result;
+    }
+    public string HTMLStatement()
+    {
+        string result = $"<h1>Rental for <em>{Name}</em></h1>";
+
+        result += "<ul>";
+        foreach (var aRental in Rentals)
+            result += $"<li>{aRental.Movie.Title} - {aRental.GetCharge()}</li>";
+        result += "</ul>";
+
+        result += $"<p>The amount of debt is <em>{GetTotalCharge()}</em></p>";
+        result += $"<p>You earned <em>{GetTotalFrequentRenterPoints()}</em> for activity</p>";
+
+        return result;
+    }
+
+    private double GetTotalCharge()
+    {
+        return Rentals.Sum(r => r.GetCharge());
+    }
+    private int GetTotalFrequentRenterPoints()
+    {
+        return Rentals.Sum(r => r.GetFrequentRenterPoints());
     }
 }
